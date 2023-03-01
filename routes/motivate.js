@@ -37,7 +37,7 @@ Router.post('/', async (request, response) => {
 Router.get('/', async (request, response) => {
     try{
     let motivates = await motivationModel.find();
-    
+
     return response.status(200).json(motivates);
     }catch(error){
         return response.status(500).json({msg: error});
@@ -56,6 +56,7 @@ Router.get('/:id', async (request, response) => {
 
     try{
         let motivate = await motivationModel.findById(id);
+
         return response.status(200).json(motivate);
     }catch(error)
     {
@@ -64,10 +65,20 @@ Router.get('/:id', async (request, response) => {
 
 });
 
-Router.get('/random', (request, response) => {
-    return response.status(200).json({
-        msg: motivates[Math.floor(Math.random() * motivates.length - 0)]
-    });
+Router.get('/random', async (request, response) => {
+
+    
+    try{
+        let motivates = await motivationModel.find();
+
+        let motivate = motivates[Math.floor(Math.random() * motivates.length)];
+        console.log(typeof(motivate));
+
+        return response.status(200).json(motivates); // ca mache pas 
+    }catch(error)
+    {
+        return response.status(500).json({msg: error});
+    }
 });
 
 Router.put('/:id', async (request, response) => {
