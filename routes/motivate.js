@@ -14,8 +14,6 @@ const Router = express.Router();
 Router.post('/', async (request, response) => {
     const { label } = request.body;
 
-    let date = new Date();
-
     if (label == null || label == "") {
         return response.status(502).json({msg: "Donnée non conforme"});
     }
@@ -23,7 +21,6 @@ Router.post('/', async (request, response) => {
     try {
         const motivation = new motivationModel({
             label: label,
-            timeStamp: date.toString()
         });
         
         await motivation.save();
